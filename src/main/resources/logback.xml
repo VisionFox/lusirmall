@@ -12,7 +12,7 @@
 
     <appender name="luisrmall" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--<File>d:/mmalllog/mmall.log</File>-->
-        <File>H:/apache-tomcat-8.5.23/logs/mmall.log</File>
+        <File>H:/apache-tomcat-8.5.23/logs/lusirmall.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>H:/apache-tomcat-8.5.23/logs/lusirmall.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
             <append>true</append>
