@@ -7,6 +7,7 @@ import com.lusirmall.dao.ProductMapper;
 import com.lusirmall.pojo.Category;
 import com.lusirmall.pojo.Product;
 import com.lusirmall.service.IProductService;
+import com.lusirmall.util.DateTimeUtil;
 import com.lusirmall.util.PropertiesUtil;
 import com.lusirmall.vo.ProductDetailVo;
 import org.apache.commons.lang3.StringUtils;
@@ -64,50 +65,56 @@ public class ProductServiceImpl implements IProductService {
         return ServerResponse.createByErrorMessage("修改产品销售状态失败");
     }
 
-//    public ServerResponse<Object> manageProductDetail(Integer productId) {
-//        if (productId == null) {
-//            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),
-//                    ResponseCode.ILLEGAL_ARGUMENT.getDesc());
-//        }
-//        Product product = productMapper.selectByPrimaryKey(productId);
-//        if (product == null) {
-//            return ServerResponse.createByErrorMessage("产品已下架或者删除");
-//        }
-//        //vo对象  value object
-//        //pojo->bo(business object)->vo(view Object)
-//
-//        ProductDetailVo productDetailVo =
-//
-//    }
+    @Override
+    public ServerResponse<ProductDetailVo> manageProductDetail(Integer productId) {
+        if (productId == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),
+                    ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+        Product product = productMapper.selectByPrimaryKey(productId);
+        if (product == null) {
+            return ServerResponse.createByErrorMessage("产品已下架或者删除");
+        }
+        //vo对象  value object
+        //pojo->bo(business object)->vo(view Object)
 
-//    private assembleProductDetailVo(Product product) {
-//        ProductDetailVo productDetailVo = new ProductDetailVo();
-//        productDetailVo.setId(product.getId());
-//        productDetailVo.setSubtitle(product.getSubtitle());
-//        productDetailVo.setPrice(product.getPrice());
-//        productDetailVo.setMainImage(product.getMainImage());
-//        productDetailVo.setSubImages(product.getSubImages());
-//        productDetailVo.setCategoryId(product.getCategoryId());
-//        productDetailVo.setDetail(productDetailVo.getDetail());
-//        productDetailVo.setName(product.getName());
-//        productDetailVo.setStock(product.getStock());
-//        productDetailVo.setStatus(product.getStatus());
-//
-//        //imageHost
-//        //parentCategoryId
-//        //createTime
-//        //updateTime
-//        productDetailVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix", "http://img.happymmall.com/"));
-//
-//        Category category=categoryMapper.selectByPrimaryKey(product.getCategoryId());
-//        if (category==null){
-//            //默认是根节点
-//            productDetailVo.setParentCategoryId(0);
-//        }else {
-//            productDetailVo.setParentCategoryId(category.getParentId());
-//        }
-//
-//
-//
-//    }
+      ProductDetailVo productDetailVo = assembleProductDetailVo(product);
+
+        return ServerResponse.createBySuccess(productDetailVo);
+    }
+
+    private ProductDetailVo assembleProductDetailVo(Product product) {
+        ProductDetailVo productDetailVo = new ProductDetailVo();
+        productDetailVo.setId(product.getId());
+        productDetailVo.setSubtitle(product.getSubtitle());
+        productDetailVo.setPrice(product.getPrice());
+        productDetailVo.setMainImage(product.getMainImage());
+        productDetailVo.setSubImages(product.getSubImages());
+        productDetailVo.setCategoryId(product.getCategoryId());
+        productDetailVo.setDetail(productDetailVo.getDetail());
+        productDetailVo.setName(product.getName());
+        productDetailVo.setStock(product.getStock());
+        productDetailVo.setStatus(product.getStatus());
+
+        //imageHost
+        //parentCategoryId
+        //createTime
+        //updateTime
+        productDetailVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix", "http://img.happymmall.com/"));
+
+        Category category=categoryMapper.selectByPrimaryKey(product.getCategoryId());
+        if (category==null){
+            //默认是根节点
+            productDetailVo.setParentCategoryId(0);
+        }else {
+            productDetailVo.setParentCategoryId(category.getParentId());
+        }
+
+        productDetailVo.setCreateTime(DateTimeUtil.dateToStr(product.getCreateTime()));
+        productDetailVo.setUpdateTime(DateTimeUtil.dateToStr(product.getUpdateTime()));
+
+        return productDetailVo;
+
+
+    }
 }
