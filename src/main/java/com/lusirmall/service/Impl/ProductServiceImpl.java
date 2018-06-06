@@ -216,6 +216,7 @@ public class ProductServiceImpl implements IProductService {
         }
 
         if (StringUtils.isNotBlank(keyword)) {
+            //这里的百分号是为了数据库查询使用%通配符
             keyword = new StringBuilder().append("%").append(keyword).append("%").toString();
         }
 
