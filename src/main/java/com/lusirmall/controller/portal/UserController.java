@@ -5,8 +5,6 @@ import com.lusirmall.common.ResponseCode;
 import com.lusirmall.common.ServerResponse;
 import com.lusirmall.pojo.User;
 import com.lusirmall.service.IUserService;
-import com.lusirmall.util.MD5Util;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
