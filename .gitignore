@@ -30,3 +30,4 @@ target/
 Thumds.db
 /src/main/resources/datasource.properties
 /src/main/resources/lusirmall.properties
+/src/main/resources/zfbinfo.properties
